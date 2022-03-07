@@ -38,6 +38,24 @@ app.get("/borough/:name", (req, res) => {
   res.json(result);
 });
 
+app.get("/boroughInLoadNames", (req, res) => {
+  let result = [];
+  const boroughs = trash.map(({ borough }) => borough);
+  const set = new Set([...boroughs]);
+  const setSort = [...set].sort();
+
+  setSort.forEach((borough) => {
+    const sameNameByBorough = trash.filter((item) => item.borough === borough);
+    const loadNames = sameNameByBorough.map(({ loadName }) => loadName);
+    const set = new Set([...loadNames]);
+    const a = [...set].sort();
+
+    result.push({ title: borough, data: [...a] });
+  });
+
+  res.json(result);
+});
+
 app.get("/loadName/:borough", (req, res) => {
   const { borough } = req.params;
 
