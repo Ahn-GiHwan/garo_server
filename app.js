@@ -10,7 +10,11 @@ app.use(cors());
 app.get("/borough", (req, res) => {
   const boroughs = trash.map(({ borough }) => borough);
   const set = new Set([...boroughs]);
-  const result = [...set].sort();
+  const setSort = [...set].sort();
+  const result = setSort.map((borough, i) => ({
+    id: i,
+    borough,
+  }));
   res.json(result);
 });
 
