@@ -18,8 +18,22 @@ router.route("/boroughs").get((req, res) => {
 
 router.route("/borough/loadNames/count").get((req, res) => {
   const result = [];
-  const innerData = [];
+  let innerData = [];
   const boroughs = setSort.map((borough) => borough);
+
+  boroughs.forEach((label) => {
+    const innerObj = {};
+    const filterBorough = data.filter((item) => item.borough === label);
+    let value = 0;
+    filterBorough.forEach((item) => {
+      if (item.borough === label) value++;
+    });
+    innerData.push({ label, value });
+  });
+
+  result.push({ title: "전체", data: innerData });
+
+  innerData = [];
 
   boroughs.forEach((borough) => {
     const filterBorough = data.filter((item) => item.borough === borough);
