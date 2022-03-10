@@ -2,10 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const trash = require("./data/trash");
 const app = express();
+const mapRouter = require("./routes/map");
+const chartRouter = require("./routes/chart");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+
+app.use("/map", mapRouter);
+app.use("/chart", chartRouter);
 
 app.get("/borough", (req, res) => {
   const boroughs = trash.map(({ borough }) => borough);
