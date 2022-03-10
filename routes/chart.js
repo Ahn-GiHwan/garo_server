@@ -22,7 +22,6 @@ router.route("/borough/loadNames/count").get((req, res) => {
   const boroughs = setSort.map((borough) => borough);
 
   boroughs.forEach((label) => {
-    const innerObj = {};
     const filterBorough = data.filter((item) => item.borough === label);
     let value = 0;
     filterBorough.forEach((item) => {
@@ -42,17 +41,18 @@ router.route("/borough/loadNames/count").get((req, res) => {
     const set = new Set([...loadNames]);
     const sortLoadNames = [...set].sort();
 
+    console.log(sortLoadNames);
+
     const innerObj = {};
     sortLoadNames.forEach((label) => {
       let value = 0;
-      filterBorough.forEach((item) => {
-        if (item.loadName === label) value++;
+      filterBorough.forEach(({ loadName }) => {
+        if (loadName === label) value++;
       });
       innerObj.label = label;
       innerObj.value = value;
+      innerData.push(innerObj);
     });
-    innerData.push(innerObj);
-
     result.push({ title: borough, data: innerData });
   });
 
